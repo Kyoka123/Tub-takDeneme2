@@ -10,6 +10,9 @@ public class Questions : MonoBehaviour
     public float textspeed;
     public TMPro.TextMeshProUGUI textcomponent;
 
+    //courutine bitti mi diye kontrol etmek için bool deðiþkeni oluþturduk
+    bool iscoroutinerunning;
+
     //array þeklinde yaptýðýmýz için kaçýncý array olduðunu tutmak için index deðiþkeni oluþturduk
     private int index;
     void Start()
@@ -19,7 +22,7 @@ public class Questions : MonoBehaviour
     }
     void Update()
     {
-        if(Mouse.current.leftButton.wasPressedThisFrame)
+        if(Mouse.current.leftButton.wasPressedThisFrame && iscoroutinerunning == false)
         {        
          questions.RemoveAt(index);
             index = Random.Range(0, questions.Count);
@@ -40,9 +43,11 @@ public class Questions : MonoBehaviour
         
         foreach (char c in questions[index].ToCharArray())
         {
+            iscoroutinerunning = true;
             textcomponent.text += c;
             //yazý hýzýný belirlemek için waitforseconds kullandýk
             yield return new WaitForSeconds(textspeed);
         }
+            iscoroutinerunning = false;
     }
 }
