@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 public class CarMovement2 : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
-    [SerializeField] private float _force = 25f;
+    [SerializeField] private float _force = 50f;
     [SerializeField] private float _turnSpeed = 220f;
     private float momentum;
     private float momentum_other;

@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarMovement
   _rb: {fileID: 867891094}
-  _force: 25
+  _force: 50
   _turnSpeed: 220
   collisionSpeed: 0.2
   collisionSpeed_other: 0.4
@@ -925,7 +925,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &867891095
 BoxCollider:
@@ -934,7 +934,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867891092}
-  m_Material: {fileID: 13400000, guid: 1a6acd6f326643248adb4e19a77cba00, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1358,7 +1358,7 @@ RectTransform:
   m_GameObject: {fileID: 1027649655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 30}
-  m_LocalScale: {x: 6, y: 3, z: 6}
+  m_LocalScale: {x: 4, y: 2, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 886745867}
@@ -1505,7 +1505,7 @@ Transform:
   m_GameObject: {fileID: 1338051687}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35836798, y: 0, z: 0, w: 0.93358046}
-  m_LocalPosition: {x: -17.5, y: 28.33, z: -30}
+  m_LocalPosition: {x: -3.6, y: 22, z: -8.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1575,6 +1575,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
       propertyPath: m_Name
       value: blue platform (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0000009536743
+      objectReference: {fileID: 0}
+    - target: {fileID: 1151388028547126963, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2011,7 +2019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CarMovement2
   _rb: {fileID: 2075008957}
-  _force: 25
+  _force: 50
   _turnSpeed: 220
   collisionSpeed: 0.2
   collisionSpeed_other: 0.4
@@ -2040,7 +2048,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!65 &2075008958
 BoxCollider:
@@ -2049,7 +2057,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2075008955}
-  m_Material: {fileID: 13400000, guid: 1a6acd6f326643248adb4e19a77cba00, type: 2}
+  m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
