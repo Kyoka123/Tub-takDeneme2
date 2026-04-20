@@ -1,8 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CarMovement : MonoBehaviour
 {
+
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _force = 50f;
     [SerializeField] private float _turnSpeed = 220f;
@@ -14,15 +16,26 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float collisionSpeed_other = 0.4f;
     private Vector3 _input;
     private Vector2 inputRaw;
+
+    
+    bool isGrounded;
+
+
     private void Update()
     {
-        GatherInput();
-        Look();
+        if (isGrounded)
+        {
+            GatherInput();
+            Look();
+        }
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (isGrounded)
+        {
+            Move();
+        }
     }
 
     private void GatherInput()
@@ -63,6 +76,21 @@ public class CarMovement : MonoBehaviour
         if (otherRb != null)
         {
             otherRb.AddForce(-direction * momentum_other, ForceMode.Impulse);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if( other.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+             isGrounded = false;
         }
     }
 }

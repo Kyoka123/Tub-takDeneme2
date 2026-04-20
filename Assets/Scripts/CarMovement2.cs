@@ -15,15 +15,23 @@ public class CarMovement2 : MonoBehaviour
     private Vector3 _input;
     private Vector2 inputRaw;
 
+    bool isGrounded;
+
     private void Update()
     {
-        GatherInput();
-        Look();
+        if (isGrounded)
+        {
+            GatherInput();
+            Look();
+        }
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if (isGrounded)
+        {
+            Move();
+        }
     }
 
     private void GatherInput()
@@ -64,6 +72,21 @@ public class CarMovement2 : MonoBehaviour
         if (otherRb != null)
         {
             otherRb.AddForce(-direction * momentum_other, ForceMode.Impulse);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 }

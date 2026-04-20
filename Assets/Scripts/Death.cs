@@ -7,7 +7,11 @@ public class Death : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            other.gameObject.transform.position = Targetpoint;
+           GameObject.FindGameObjectWithTag("Player").transform.position = Targetpoint;
+        }
+        if (other.gameObject.tag == "Player2")
+        {
+            GameObject.FindGameObjectWithTag("Player2").transform.position = Targetpoint;
         }
     }
 }
