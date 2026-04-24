@@ -5,7 +5,13 @@ public class CarMovement2 : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _force = 50f;
-    [SerializeField] private float _turnSpeed = 220f;
+    [SerializeField] private float _turnSpeed = 4.5f;
+    [SerializeField] private float _mass = 1f;
+    [SerializeField] private float _gravity = 9.81f;
+    [SerializeField] private float _gravityMultiplier = 1f;
+    [SerializeField] private float _frictionCoefficient = 2.6f;
+    [SerializeField] private float _angularDrag = 0.1f;
+    private float _frictionForce;
     private float momentum;
     private float momentum_other;
     private float direction;
@@ -15,22 +21,38 @@ public class CarMovement2 : MonoBehaviour
     private Vector3 _input;
     private Vector2 inputRaw;
 
-    bool isGrounded;
 
-    private void Update()
-    {
-        if (isGrounded)
-        {
-            GatherInput();
-            Look();
-        }
-    }
+    bool isGrounded;
 
     private void FixedUpdate()
     {
+        _rb.AddForce(Vector3.down * _gravity * _gravityMultiplier, ForceMode.Acceleration);
+
         if (isGrounded)
         {
+            Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
+
+            GatherInput();
+            Look();
+
+            if (_horizontalVelocity == Vector3.zero)
+            {
+                _frictionForce = 0;
+            }
+            else
+            {
+                _frictionForce = _frictionCoefficient * _mass * _gravity;
+            }
+
+            _rb.AddForce(_horizontalVelocity.normalized * -_frictionForce);
+
             Move();
+        }
+
+        if (_input.x == 0)
+        {
+            float dampedY = Mathf.MoveTowards(_rb.angularVelocity.y, 0f, _angularDrag * Time.fixedDeltaTime);
+            _rb.angularVelocity = new Vector3(0, dampedY, 0);
         }
     }
 
@@ -46,11 +68,13 @@ public class CarMovement2 : MonoBehaviour
 
     private void Look()
     {
+        Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
         velocityDirection = Vector3.Dot(_rb.linearVelocity, transform.forward);
 
-        if (_input == Vector3.zero || _rb.linearVelocity.magnitude < 0.1f) return;
+        if (_input.x == 0 || _horizontalVelocity.magnitude < 0.1f) return;
 
-        transform.Rotate(Vector3.up * _input.x * (velocityDirection > 0 ? 1 : -1) * _turnSpeed * Mathf.Sqrt(_rb.linearVelocity.magnitude) /5 * Time.deltaTime);
+        float _angularVelocity = _input.x * (velocityDirection > 0 ? 1 : -1) * _turnSpeed * Mathf.Sqrt(_rb.linearVelocity.magnitude) / 5;
+        _rb.angularVelocity = new Vector3(0f, _angularVelocity, 0f);
     }
 
     private void Move()
@@ -60,18 +84,21 @@ public class CarMovement2 : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Rigidbody otherRb = collision.rigidbody;
-        momentum = _rb.mass * collision.relativeVelocity.magnitude * collisionSpeed;
-        momentum_other = _rb.mass * collision.relativeVelocity.magnitude * collisionSpeed_other;
-
-        ContactPoint contact = collision.contacts[0];
-        Vector3 direction = contact.normal;
-
-        _rb.AddForce(direction * momentum, ForceMode.Impulse);
-
-        if (otherRb != null)
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Player2")
         {
-            otherRb.AddForce(-direction * momentum_other, ForceMode.Impulse);
+            Rigidbody otherRb = collision.rigidbody;
+            momentum = _rb.mass * collision.relativeVelocity.magnitude * collisionSpeed;
+            momentum_other = _rb.mass * collision.relativeVelocity.magnitude * collisionSpeed_other;
+
+            ContactPoint contact = collision.contacts[0];
+            Vector3 direction = contact.normal;
+
+            _rb.AddForce(direction * momentum, ForceMode.Impulse);
+
+            if (otherRb != null)
+            {
+                otherRb.AddForce(-direction * momentum_other, ForceMode.Impulse);
+            }
         }
     }
 
@@ -80,6 +107,7 @@ public class CarMovement2 : MonoBehaviour
         if (other.gameObject.tag == "Ground")
         {
             isGrounded = true;
+
         }
     }
     void OnTriggerExit(Collider other)
