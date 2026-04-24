@@ -4,7 +4,14 @@ using UnityEngine.InputSystem;
 
 public class CarMovement : MonoBehaviour
 {
-
+    /// <summary>
+    /// script that handles the movement of the car, including acceleration, 
+    /// turning, friction, and collision response. 
+    /// It uses Rigidbody physics to apply forces and torques to the 
+    /// car based on player input and interactions with other objects in the environment.
+    /// </summary>
+    /// gerekli deðerleri atamak için deðiþkenler oluþturduk
+    /// hareket etme, dönme ve yer çekimlerini ayarlayacak deðiþkenler
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _force = 50f;
     [SerializeField] private float _turnSpeed = 4.5f;
@@ -13,30 +20,36 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float _gravityMultiplier = 1f;
     [SerializeField] private float _frictionCoefficient = 2.6f;
     [SerializeField] private float _angularDrag = 0.1f;
+    // çarpýþma sýrasýnda kullancaðýmýz deðerler
     private float _frictionForce;
     private float momentum;
     private float momentum_other;
     private float direction;
     private float velocityDirection;
+    //çarpýþma gücünü belirlemek için deðiþkenler
     [SerializeField] private float collisionSpeed = 0.2f;
     [SerializeField] private float collisionSpeed_other = 0.4f;
+    //hareket etmemizi saðlayacak vektör deðiþkenleri
     private Vector3 _input;
     private Vector2 inputRaw;
 
-    
-    bool isGrounded;
+   //yere deðip deðmediðimizi gösterecek bool deðiþkeni
+    private bool isGrounded;
 
     private void FixedUpdate()
     {
+        //yer çekimini iþledik
         _rb.AddForce(Vector3.down * _gravity * _gravityMultiplier, ForceMode.Acceleration);
 
         if (isGrounded)
         {
+            //yere deðdiði zaman sekmemesi için y deðerini 0f yaptýk
             Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
 
             GatherInput();
             Look();
 
+            //hýz yoksa sürtünme yok
             if (_horizontalVelocity == Vector3.zero)
             {
                 _frictionForce = 0;
@@ -45,12 +58,13 @@ public class CarMovement : MonoBehaviour
             {
                 _frictionForce = _frictionCoefficient * _mass * _gravity;
             }
-
+            //sürtünmeyi ekledik
             _rb.AddForce(_horizontalVelocity.normalized *-_frictionForce);
 
             Move();
         }
 
+        //bu ne bilmiom
         if (_input.x == 0)
         {
             float dampedY = Mathf.MoveTowards(_rb.angularVelocity.y, 0f, _angularDrag * Time.fixedDeltaTime);
@@ -58,6 +72,7 @@ public class CarMovement : MonoBehaviour
         }
     }
 
+    //input aldýk
     private void GatherInput()
     {
 
@@ -68,6 +83,7 @@ public class CarMovement : MonoBehaviour
         _input = new Vector3(inputRaw.x, 0f, inputRaw.y);
     }
 
+    //dönmeyi iþledik
     private void Look()
     {
         Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
@@ -79,11 +95,13 @@ public class CarMovement : MonoBehaviour
         _rb.angularVelocity = new Vector3(0f, _angularVelocity, 0f);
     }
 
+    //aldýðýmýz deðerleri hareket etmek için kullandýk
     private void Move()
     {
         _rb.AddForce(transform.forward * _input.z * _force);
     }
 
+    //çarpýþma etkisini iþledik
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player"|| collision.gameObject.tag == "Player2")
@@ -104,6 +122,7 @@ public class CarMovement : MonoBehaviour
         }
     }
 
+    //yere deðip deðmediðine baktýk
     private void OnTriggerEnter(Collider other)
     {
         if( other.gameObject.tag == "Ground")
@@ -112,6 +131,7 @@ public class CarMovement : MonoBehaviour
             
         }
     }
+    //deðmiiyorsa false atadýk
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Ground"))
