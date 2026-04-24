@@ -853,7 +853,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d07b624552f5340a4faf6329496fd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Death
-  Targetpoint: {x: 0, y: 0, z: 0}
 --- !u!1001 &720188997
 PrefabInstance:
   m_ObjectHideFlags: 0

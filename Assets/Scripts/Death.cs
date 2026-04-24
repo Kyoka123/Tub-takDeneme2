@@ -2,10 +2,13 @@ using UnityEngine;
 
 public class Death : MonoBehaviour
 {
-    public Vector3 Targetpoint = new Vector3(0, 2, 0);
+    Vector3 Targetpoint;
+   
+    
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
+        Targetpoint = new Vector3(Random.Range(0, 10), 2, Random.Range(5, 15));
+        if (other.gameObject.tag == "Player")
         {
            GameObject.FindGameObjectWithTag("Player").transform.position = Targetpoint;
         }
