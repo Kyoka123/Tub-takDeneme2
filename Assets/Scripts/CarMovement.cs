@@ -59,6 +59,10 @@ public class CarMovement : MonoBehaviour
 
     private void Move()
     {
+        if (isGrounded && _rb.linearVelocity.y < 0)
+        {
+            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
+        }
         _rb.AddForce(transform.forward * _input.z * _force);
     }
 
@@ -84,6 +88,7 @@ public class CarMovement : MonoBehaviour
         if( other.gameObject.tag == "Ground")
         {
             isGrounded = true;
+            
         }
     }
     void OnTriggerExit(Collider other)
