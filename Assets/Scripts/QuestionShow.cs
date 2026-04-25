@@ -9,7 +9,7 @@ public class QuestionShow : MonoBehaviour
     public float waitTime = 2f;
 
     private float hiddenY = 720f;
-    private float visibleY = 620f;
+    private float visibleY = 580f;
 
     void Start()
     {
