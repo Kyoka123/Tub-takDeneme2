@@ -10,11 +10,13 @@ public class Death : MonoBehaviour
         Targetpoint = new Vector3(Random.Range(0, 10), 2, Random.Range(5, 15));
         if (deniz.gameObject.tag == "Player")
         {
+           GameObject.FindGameObjectWithTag("Player").transform.rotation = Quaternion.Euler(0,0,0);
            GameObject.FindGameObjectWithTag("Player").transform.position = Targetpoint;
         }
         if (deniz.gameObject.tag == "Player2")
         {
-            GameObject.FindGameObjectWithTag("Player2").transform.position = Targetpoint;
+           GameObject.FindGameObjectWithTag("Player2").transform.rotation = Quaternion.Euler(0, 0, 0);
+           GameObject.FindGameObjectWithTag("Player2").transform.position = Targetpoint;
         }
     }
 }

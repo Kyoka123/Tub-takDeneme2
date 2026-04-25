@@ -20,6 +20,7 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float _gravityMultiplier = 1f;
     [SerializeField] private float _frictionCoefficient = 2.6f;
     [SerializeField] private float _angularDrag = 0.1f;
+    [SerializeField] private float _minimumVelocity = 0.1f;
     // çarpýþma sýrasýnda kullancaðýmýz deðerler
     private float _frictionForce;
     private float momentum;
@@ -50,16 +51,16 @@ public class CarMovement : MonoBehaviour
             Look();
 
             //hýz yoksa sürtünme yok
-            if (_horizontalVelocity == Vector3.zero)
+            if (_horizontalVelocity.magnitude < _minimumVelocity)
             {
                 _frictionForce = 0;
             }
             else
             {
                 _frictionForce = _frictionCoefficient * _mass * _gravity;
+                _rb.AddForce(_horizontalVelocity.normalized * -_frictionForce);
             }
             //sürtünmeyi ekledik
-            _rb.AddForce(_horizontalVelocity.normalized *-_frictionForce);
 
             Move();
         }
@@ -98,7 +99,7 @@ public class CarMovement : MonoBehaviour
     //aldýðýmýz deðerleri hareket etmek için kullandýk
     private void Move()
     {
-        _rb.AddForce(transform.forward * _input.z * _force);
+        _rb.AddForce(transform.forward * _input.z * _mass * _force);
     }
 
     //çarpýþma etkisini iþledik

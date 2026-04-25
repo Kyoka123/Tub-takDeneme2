@@ -11,6 +11,7 @@ public class CarMovement2 : MonoBehaviour
     [SerializeField] private float _gravityMultiplier = 1f;
     [SerializeField] private float _frictionCoefficient = 2.6f;
     [SerializeField] private float _angularDrag = 0.1f;
+    [SerializeField] private float _minimumVelocity = 0.1f;
     private float _frictionForce;
     private float momentum;
     private float momentum_other;
@@ -35,16 +36,15 @@ public class CarMovement2 : MonoBehaviour
             GatherInput();
             Look();
 
-            if (_horizontalVelocity == Vector3.zero)
+            if (_horizontalVelocity.magnitude < _minimumVelocity)
             {
                 _frictionForce = 0;
             }
             else
             {
                 _frictionForce = _frictionCoefficient * _mass * _gravity;
+                _rb.AddForce(_horizontalVelocity.normalized * -_frictionForce);
             }
-
-            _rb.AddForce(_horizontalVelocity.normalized * -_frictionForce);
 
             Move();
         }
@@ -79,7 +79,7 @@ public class CarMovement2 : MonoBehaviour
 
     private void Move()
     {
-        _rb.AddForce(transform.forward * _input.z * _force);
+        _rb.AddForce(transform.forward * _input.z * _mass * _force);
     }
 
     void OnCollisionEnter(Collision collision)
