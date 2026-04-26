@@ -1,3 +1,5 @@
+﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +26,8 @@ public class CarMovement2 : MonoBehaviour
 
 
     bool isGrounded;
+    bool speedPowerUpActive;
+    bool strengthPowerUpActive;
 
     private void FixedUpdate()
     {
@@ -82,6 +86,26 @@ public class CarMovement2 : MonoBehaviour
         _rb.AddForce(transform.forward * _input.z * _mass * _force);
     }
 
+    IEnumerator SpeedPowerUpRoutine()
+    {
+        speedPowerUpActive = true;
+        _force *= 1.6f; // Gücü artır
+        collisionSpeed_other /= 1.6f; // Diğer aracın çarpışma etkisini azaltarak dengeler
+        yield return new WaitForSeconds(5f); // 3 saniye bekle
+        _force /= 1.6f; // Gücü eski haline getir
+        collisionSpeed_other *= 1.6f; // Diğer aracın çarpışma etkisini eski haline getirerek düzeltir
+        speedPowerUpActive = false;
+    }
+
+    IEnumerator StrengthPowerUpRoutine()
+    {
+        strengthPowerUpActive = true;
+        collisionSpeed_other *= 2.5f; // Diğer aracın çarpışma etkisini arttırarak güçlenir
+        yield return new WaitForSeconds(2f); // 2 saniye bekle
+        collisionSpeed_other /= 2.5f; // Diğer aracın çarpışma etkisini azaltarak eski haline gelir
+        strengthPowerUpActive = false;
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Player2")
@@ -107,7 +131,16 @@ public class CarMovement2 : MonoBehaviour
         if (other.gameObject.tag == "Ground")
         {
             isGrounded = true;
+        }
 
+        if (other.gameObject.tag == "speedPowerUpCube" && !speedPowerUpActive)
+        {
+            StartCoroutine(SpeedPowerUpRoutine());
+        }
+
+        if (other.gameObject.tag == "strengthPowerUpCube" && !strengthPowerUpActive)
+        {
+            StartCoroutine(StrengthPowerUpRoutine());
         }
     }
     void OnTriggerExit(Collider other)

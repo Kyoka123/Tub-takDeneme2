@@ -1,3 +1,4 @@
+ï»¿using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,8 +11,8 @@ public class CarMovement : MonoBehaviour
     /// It uses Rigidbody physics to apply forces and torques to the 
     /// car based on player input and interactions with other objects in the environment.
     /// </summary>
-    /// gerekli değerleri atamak için değişkenler oluşturduk
-    /// hareket etme, dönme ve yer çekimlerini ayarlayacak değişkenler
+    /// gerekli deÃ°erleri atamak iÃ§in deÃ°iÃ¾kenler oluÃ¾turduk
+    /// hareket etme, dÃ¶nme ve yer Ã§ekimlerini ayarlayacak deÃ°iÃ¾kenler
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _force = 50f;
     [SerializeField] private float _turnSpeed = 4.5f;
@@ -21,36 +22,38 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float _frictionCoefficient = 2.6f;
     [SerializeField] private float _angularDrag = 0.1f;
     [SerializeField] private float _minimumVelocity = 0.1f;
-    // çarpışma sırasında kullancağımız değerler
+    // Ã§arpÃ½Ã¾ma sÃ½rasÃ½nda kullancaÃ°Ã½mÃ½z deÃ°erler
     private float _frictionForce;
     private float momentum;
     private float momentum_other;
     private float direction;
     private float velocityDirection;
-    //çarpışma gücünü belirlemek için değişkenler
+    //Ã§arpÃ½Ã¾ma gÃ¼cÃ¼nÃ¼ belirlemek iÃ§in deÃ°iÃ¾kenler
     [SerializeField] private float collisionSpeed = 0.2f;
     [SerializeField] private float collisionSpeed_other = 0.4f;
-    //hareket etmemizi sağlayacak vektör değişkenleri
+    //hareket etmemizi saÃ°layacak vektÃ¶r deÃ°iÃ¾kenleri
     private Vector3 _input;
     private Vector2 inputRaw;
 
-   //yere değip değmediğimizi gösterecek bool değişkeni
+   //yere deÃ°ip deÃ°mediÃ°imizi gÃ¶sterecek bool deÃ°iÃ¾keni
     private bool isGrounded;
+    private bool speedPowerUpActive;
+    private bool strengthPowerUpActive;
 
     private void FixedUpdate()
     {
-        //yer çekimini işledik
+        //yer Ã§ekimini iÃ¾ledik
         _rb.AddForce(Vector3.down * _gravity * _gravityMultiplier, ForceMode.Acceleration);
 
         if (isGrounded)
         {
-            //yere değdiği zaman sekmemesi için y değerini 0f yaptık
+            //yere deÃ°diÃ°i zaman sekmemesi iÃ§in y deÃ°erini 0f yaptÃ½k
             Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
 
             GatherInput();
             Look();
 
-            //hız yoksa sürtünme yok
+            //hÃ½z yoksa sÃ¼rtÃ¼nme yok
             if (_horizontalVelocity.magnitude < _minimumVelocity)
             {
                 _frictionForce = 0;
@@ -60,7 +63,7 @@ public class CarMovement : MonoBehaviour
                 _frictionForce = _frictionCoefficient * _mass * _gravity;
                 _rb.AddForce(_horizontalVelocity.normalized * -_frictionForce);
             }
-            //sürtünmeyi ekledik
+            //sÃ¼rtÃ¼nmeyi ekledik
 
             Move();
         }
@@ -73,7 +76,7 @@ public class CarMovement : MonoBehaviour
         }
     }
 
-    //input aldık
+    //input aldÃ½k
     private void GatherInput()
     {
 
@@ -84,7 +87,7 @@ public class CarMovement : MonoBehaviour
         _input = new Vector3(inputRaw.x, 0f, inputRaw.y);
     }
 
-    //dönmeyi işledik
+    //dÃ¶nmeyi iÃ¾ledik
     private void Look()
     {
         Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
@@ -96,13 +99,33 @@ public class CarMovement : MonoBehaviour
         _rb.angularVelocity = new Vector3(0f, _angularVelocity, 0f);
     }
 
-    //aldığımız değerleri hareket etmek için kullandık
+    //aldÃ½Ã°Ã½mÃ½z deÃ°erleri hareket etmek iÃ§in kullandÃ½k
     private void Move()
     {
         _rb.AddForce(transform.forward * _input.z * _mass * _force);
     }
 
-    //çarpışma etkisini işledik
+    IEnumerator SpeedPowerUpRoutine()
+    {
+        speedPowerUpActive = true;
+        _force *= 1.6f; // GÃ¼cÃ¼ artÄ±r
+        collisionSpeed_other /= 1.6f; // DiÄŸer aracÄ±n Ã§arpÄ±ÅŸma etkisini azaltarak dengeler
+        yield return new WaitForSeconds(3f); // 3 saniye bekle
+        _force /= 1.6f; // GÃ¼cÃ¼ eski haline getir
+        collisionSpeed_other *= 1.6f; // DiÄŸer aracÄ±n Ã§arpÄ±ÅŸma etkisini eski haline getirerek dÃ¼zeltir
+        speedPowerUpActive = false;
+    }
+
+    IEnumerator StrengthPowerUpRoutine()
+    {
+        strengthPowerUpActive = true;
+        collisionSpeed_other *= 2.5f; // DiÄŸer aracÄ±n Ã§arpÄ±ÅŸma etkisini arttÄ±rarak gÃ¼Ã§lenir
+        yield return new WaitForSeconds(2f); // 2 saniye bekle
+        collisionSpeed_other /= 2.5f; // DiÄŸer aracÄ±n Ã§arpÄ±ÅŸma etkisini azaltarak eski haline gelir
+        strengthPowerUpActive = false;
+    }
+
+    //Ã§arpÃ½Ã¾ma etkisini iÃ¾ledik
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player"|| collision.gameObject.tag == "Player2")
@@ -123,16 +146,25 @@ public class CarMovement : MonoBehaviour
         }
     }
 
-    //yere değip değmediğine baktık
+    //yere deÃ°ip deÃ°mediÃ°ine baktÃ½k
     private void OnTriggerEnter(Collider other)
     {
         if( other.gameObject.tag == "Ground")
         {
-            isGrounded = true;
-            
+            isGrounded = true;      
+        }
+
+        if(other.gameObject.tag == "speedPowerUpCube" && !speedPowerUpActive)
+        {
+            StartCoroutine(SpeedPowerUpRoutine());
+        }
+
+        if (other.gameObject.tag == "strengthPowerUpCube" && !strengthPowerUpActive)
+        {
+            StartCoroutine(StrengthPowerUpRoutine());
         }
     }
-    //değmiiyorsa false atadık
+    //deÃ°miiyorsa false atadÃ½k
     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Ground"))
@@ -140,4 +172,5 @@ public class CarMovement : MonoBehaviour
              isGrounded = false;
         }
     }
+
 }

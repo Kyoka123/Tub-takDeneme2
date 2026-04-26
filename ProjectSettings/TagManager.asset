@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Ground
   - Player2
+  - speedPowerUpCube
+  - strengthPowerUpCube
   layers:
   - Default
   - TransparentFX
