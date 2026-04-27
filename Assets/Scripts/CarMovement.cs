@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,6 +14,7 @@ public class CarMovement : MonoBehaviour
     /// </summary>
     /// gerekli deðerleri atamak için deðiþkenler oluþturduk
     /// hareket etme, dönme ve yer çekimlerini ayarlayacak deðiþkenler
+    [SerializeField] private Material _material;
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private float _force = 50f;
     [SerializeField] private float _turnSpeed = 4.5f;
@@ -39,6 +41,7 @@ public class CarMovement : MonoBehaviour
     private bool isGrounded;
     private bool speedPowerUpActive;
     private bool strengthPowerUpActive;
+    
 
     private void FixedUpdate()
     {
@@ -108,20 +111,28 @@ public class CarMovement : MonoBehaviour
     IEnumerator SpeedPowerUpRoutine()
     {
         speedPowerUpActive = true;
-        _force *= 1.6f; // Gücü artır
-        collisionSpeed_other /= 1.6f; // Diğer aracın çarpışma etkisini azaltarak dengeler
+        _material.color = UnityEngine.Color.yellow * 4;
+        _material.SetFloat("_Size", 0.6f);
+        _force *= 1.4f; // Gücü artır
+        collisionSpeed_other /= 1.4f; // Diğer aracın çarpışma etkisini azaltarak dengeler
         yield return new WaitForSeconds(3f); // 3 saniye bekle
-        _force /= 1.6f; // Gücü eski haline getir
-        collisionSpeed_other *= 1.6f; // Diğer aracın çarpışma etkisini eski haline getirerek düzeltir
+        _force /= 1.4f; // Gücü eski haline getir
+        collisionSpeed_other *= 1.4f; // Diğer aracın çarpışma etkisini eski haline getirerek düzeltir
+        _material.SetFloat("_Size", 0f);
+        _material.color = UnityEngine.Color.black;
         speedPowerUpActive = false;
     }
 
     IEnumerator StrengthPowerUpRoutine()
     {
         strengthPowerUpActive = true;
-        collisionSpeed_other *= 2.5f; // Diğer aracın çarpışma etkisini arttırarak güçlenir
+        _material.color = new UnityEngine.Color(0.03f, 0f, 0.003f) * 4;
+        _material.SetFloat("_Size", 0.6f);
+        collisionSpeed_other *= 3f; // Diğer aracın çarpışma etkisini arttırarak güçlenir
         yield return new WaitForSeconds(2f); // 2 saniye bekle
-        collisionSpeed_other /= 2.5f; // Diğer aracın çarpışma etkisini azaltarak eski haline gelir
+        collisionSpeed_other /= 3f; // Diğer aracın çarpışma etkisini azaltarak eski haline gelir
+        _material.SetFloat("_Size", 0f);
+        _material.color = UnityEngine.Color.black;
         strengthPowerUpActive = false;
     }
 
