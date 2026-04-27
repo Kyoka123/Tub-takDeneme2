@@ -1544,6 +1544,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: green platform (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1554,6 +1558,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 720188999}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 720189000}
   m_SourcePrefab: {fileID: 100100000, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
 --- !u!4 &720188998 stripped
 Transform:
@@ -1587,6 +1594,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &720189000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99082336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
+  fallDelay: 1
+  resetDelay: 5
+  fallSpeed: 5
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,6 +1805,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
       propertyPath: m_Name
       value: blue platform
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2008,6 +2036,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: green platform (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2018,6 +2050,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1724022277}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1724022278}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2123158104}
@@ -2193,6 +2228,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: blue platform (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2203,6 +2242,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1996294822}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1996294823}
   m_SourcePrefab: {fileID: 100100000, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
 --- !u!4 &996911830 stripped
 Transform:
@@ -2696,6 +2738,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: blue platform (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     - target: {fileID: 1151388028547126963, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0000009536743
@@ -2714,6 +2760,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1352478725}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1352478726}
     - targetCorrespondingSourceObject: {fileID: 8164078558771037576, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1239544793}
@@ -2750,6 +2799,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1352478726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009172108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
+  fallDelay: 1
+  resetDelay: 5
+  fallSpeed: 5
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &1359573958
 GameObject:
   m_ObjectHideFlags: 0
@@ -3094,6 +3160,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: green platform
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -3104,6 +3174,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1570119327}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1570119328}
   m_SourcePrefab: {fileID: 100100000, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
 --- !u!4 &1570119326 stripped
 Transform:
@@ -3137,6 +3210,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1570119328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365743071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
+  fallDelay: 1
+  resetDelay: 5
+  fallSpeed: 5
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &1572302333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,6 +3410,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1724022278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1724022275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
+  fallDelay: 1
+  resetDelay: 5
+  fallSpeed: 5
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!1001 &1732221178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3814,6 +3921,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1996294823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996294821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
+  fallDelay: 1
+  resetDelay: 5
+  fallSpeed: 5
+  resetPosition: {x: 0, y: 0, z: 0}
+  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &2021125347
 GameObject:
   m_ObjectHideFlags: 0

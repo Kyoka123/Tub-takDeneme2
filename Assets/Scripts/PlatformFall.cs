@@ -7,14 +7,19 @@ public class PlatformFall : MonoBehaviour
     public float resetDelay = 5f; // Time before the platform resets to its original position
     public float fallSpeed = 5f; // Speed at which the platform falls
     public Vector3 resetPosition; // Original position of the platform
-    public Vector3 resetVelocity = new Vector3(0, 0, 0);
+    public Vector3 resetVelocity;
     private Rigidbody rb;
 
+    private GameObject[] AllPlatforms;
+    private GameObject CorrectPlatform;
     void Start()
     {
-        resetPosition = transform.position; // Store the original position of the platform
+        AllPlatforms = GameObject.FindGameObjectsWithTag("Platform");
+        CorrectPlatform = AllPlatforms[Random.Range(0, AllPlatforms.Length)]; // Randomly select one platform to be the correct one
+       
         rb = GetComponent<Rigidbody>();
         rb.isKinematic = true; // Make the platform static at the start    
+        resetVelocity = Vector3.zero; // Initialize reset velocity to zero
     }
 
 
@@ -22,7 +27,19 @@ public class PlatformFall : MonoBehaviour
     {
         if (Mouse.current.rightButton.wasPressedThisFrame)
         {
-            StartCoroutine(FallDelay());
+            foreach (GameObject platform in AllPlatforms)
+            {
+                if (platform == CorrectPlatform)
+                {
+                    continue; // Skip the correct platform
+                }
+                else
+                {
+                    StartCoroutine(FallDelay());
+                    
+                }
+            }
+            
         }
 
         if (rb.isKinematic == false)
@@ -37,6 +54,8 @@ public class PlatformFall : MonoBehaviour
         rb.isKinematic = true; // Make the platform static again
         transform.position = resetPosition; // Reset the platform's position
         rb.linearVelocity = resetVelocity; // Reset the platform's velocity
+        
+        
     }
 
     // add a coroutine to make a lil animation before falling
@@ -50,7 +69,7 @@ public class PlatformFall : MonoBehaviour
             timer -= Time.deltaTime;
             yield return null;
         }
-
+       
         rb.isKinematic = false;
     }
 }
