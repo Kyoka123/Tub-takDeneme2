@@ -25,7 +25,7 @@ public class PowerCubeSpawner : MonoBehaviour
             GameObject spawnedCube = Instantiate(cube, spawnPos, Quaternion.identity);
             yield return new WaitForSeconds(5f);
             Destroy(spawnedCube); // Destroy the power-up after 5 seconds
-            yield return new WaitForSeconds(7f); // Wait for 10 seconds before spawning the next power-up
+            yield return new WaitForSeconds(9f); // Wait for 10 seconds before spawning the next power-up
             
         }
     }

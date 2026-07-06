@@ -24,6 +24,7 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float _frictionCoefficient = 2.6f;
     [SerializeField] private float _angularDrag = 0.1f;
     [SerializeField] private float _minimumVelocity = 0.1f;
+    public int inverter = 1;
     // çarpýþma sýrasýnda kullancaðýmýz deðerler
     private float _frictionForce;
     private float momentum;
@@ -84,8 +85,9 @@ public class CarMovement : MonoBehaviour
     {
 
         inputRaw = new Vector2(
-               (Keyboard.current.dKey.isPressed ? 1 : 0) - (Keyboard.current.aKey.isPressed ? 1 : 0),
-               (Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0));
+               inverter * ((Keyboard.current.dKey.isPressed ? 1 : 0) - (Keyboard.current.aKey.isPressed ? 1 : 0)),
+               inverter * ((Keyboard.current.wKey.isPressed ? 1 : 0) - (Keyboard.current.sKey.isPressed ? 1 : 0))
+               );
 
         _input = new Vector3(inputRaw.x, 0f, inputRaw.y);
     }
@@ -115,7 +117,7 @@ public class CarMovement : MonoBehaviour
         _material.SetFloat("_Size", 0.6f);
         _force *= 1.4f; // Gücü artır
         collisionSpeed_other /= 1.4f; // Diğer aracın çarpışma etkisini azaltarak dengeler
-        yield return new WaitForSeconds(3f); // 3 saniye bekle
+        yield return new WaitForSeconds(5f); // 5 saniye bekle
         _force /= 1.4f; // Gücü eski haline getir
         collisionSpeed_other *= 1.4f; // Diğer aracın çarpışma etkisini eski haline getirerek düzeltir
         _material.SetFloat("_Size", 0f);
@@ -129,7 +131,7 @@ public class CarMovement : MonoBehaviour
         _material.color = new UnityEngine.Color(0.03f, 0f, 0.003f) * 4;
         _material.SetFloat("_Size", 0.6f);
         collisionSpeed_other *= 3f; // Diğer aracın çarpışma etkisini arttırarak güçlenir
-        yield return new WaitForSeconds(2f); // 2 saniye bekle
+        yield return new WaitForSeconds(4f); // 4 saniye bekle
         collisionSpeed_other /= 3f; // Diğer aracın çarpışma etkisini azaltarak eski haline gelir
         _material.SetFloat("_Size", 0f);
         _material.color = UnityEngine.Color.black;

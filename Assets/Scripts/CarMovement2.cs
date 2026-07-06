@@ -15,6 +15,7 @@ public class CarMovement2 : MonoBehaviour
     [SerializeField] private float _frictionCoefficient = 2.6f;
     [SerializeField] private float _angularDrag = 0.1f;
     [SerializeField] private float _minimumVelocity = 0.1f;
+    public int inverter = 1;
     private float _frictionForce;
     private float momentum;
     private float momentum_other;
@@ -73,8 +74,9 @@ public class CarMovement2 : MonoBehaviour
     {
 
         inputRaw = new Vector2(
-               (Keyboard.current.rightArrowKey.isPressed ? 1 : 0) - (Keyboard.current.leftArrowKey.isPressed ? 1 : 0),
-               (Keyboard.current.upArrowKey.isPressed ? 1 : 0) - (Keyboard.current.downArrowKey.isPressed ? 1 : 0));
+               inverter * ((Keyboard.current.rightArrowKey.isPressed ? 1 : 0) - (Keyboard.current.leftArrowKey.isPressed ? 1 : 0)),
+               inverter * ((Keyboard.current.upArrowKey.isPressed ? 1 : 0) - (Keyboard.current.downArrowKey.isPressed ? 1 : 0))
+               );
 
         _input = new Vector3(inputRaw.x, 0f, inputRaw.y);
     }
