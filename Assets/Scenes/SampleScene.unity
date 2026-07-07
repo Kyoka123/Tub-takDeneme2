@@ -248,6 +248,7 @@ GameObject:
   m_Component:
   - component: {fileID: 110761709}
   - component: {fileID: 110761708}
+  - component: {fileID: 110761710}
   m_Layer: 0
   m_Name: RandomEvents
   m_TagString: Untagged
@@ -284,6 +285,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &110761710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110761707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
+  minInterval: 1
+  maxInterval: 5
+  fallDelay: 0.5
+  fallDuration: 2
+  respawnTime: 1
 --- !u!1 &122761391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,7 +1083,7 @@ PrefabInstance:
       addedObject: {fileID: 920290582}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 920290581}
+      addedObject: {fileID: 920290583}
   m_SourcePrefab: {fileID: 100100000, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
 --- !u!1 &650894345
 GameObject:
@@ -1311,23 +1329,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &720189000
-MonoBehaviour:
+--- !u!65 &720189000
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99082336}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &800463195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1408,7 +1430,7 @@ PrefabInstance:
       addedObject: {fileID: 1630095149}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1630095148}
+      addedObject: {fileID: 1630095150}
   m_SourcePrefab: {fileID: 100100000, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
 --- !u!1 &832575517
 GameObject:
@@ -1712,23 +1734,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
   m_PrefabInstance: {fileID: 646600247}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &920290581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 920290579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!54 &920290582
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1756,6 +1761,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &920290583
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 920290579}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &922170806
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,23 +1904,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &966736560
-MonoBehaviour:
+--- !u!65 &966736560
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 966736558}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 4, y: 3, z: 4}
+  m_Center: {x: 0, y: 2.5, z: 0}
 --- !u!1001 &985659835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2326,7 +2356,7 @@ BoxCollider:
   m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 12.058105, y: 4.3972697, z: 12.218468}
+  m_Size: {x: 12.058105, y: 5, z: 12.218468}
   m_Center: {x: -8.011492, y: -2.2034376, z: -1.0553751}
 --- !u!114 &1027649659
 MonoBehaviour:
@@ -2933,23 +2963,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1352478726
-MonoBehaviour:
+--- !u!65 &1352478726
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1009172108}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1365743071 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
@@ -2965,23 +2999,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
   m_PrefabInstance: {fileID: 1969958327}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1375440353
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1375440351}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!54 &1375440354
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3009,6 +3026,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1375440355
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375440351}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1411274199
 GameObject:
   m_ObjectHideFlags: 0
@@ -3294,23 +3332,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1570119328
-MonoBehaviour:
+--- !u!65 &1570119328
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365743071}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 4, y: 4.5, z: 4}
+  m_Center: {x: 0, y: 1.75, z: 0}
 --- !u!1 &1572302333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3472,23 +3514,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
   m_PrefabInstance: {fileID: 800463195}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1630095148
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630095146}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
 --- !u!54 &1630095149
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3516,6 +3541,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &1630095150
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630095146}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1661789387
 GameObject:
   m_ObjectHideFlags: 0
@@ -3592,23 +3638,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1724022278
-MonoBehaviour:
+--- !u!65 &1724022278
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1724022275}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1732221178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3974,7 +4024,7 @@ PrefabInstance:
       addedObject: {fileID: 1375440354}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1375440353}
+      addedObject: {fileID: 1375440355}
   m_SourcePrefab: {fileID: 100100000, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
 --- !u!1 &1996294821 stripped
 GameObject:
@@ -4008,23 +4058,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1996294823
-MonoBehaviour:
+--- !u!65 &1996294823
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996294821}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  fallDelay: 1
-  resetDelay: 5
-  fallSpeed: 5
-  resetPosition: {x: 0, y: 0, z: 0}
-  resetVelocity: {x: 0, y: 0, z: 0}
+  serializedVersion: 3
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2075008955 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}
