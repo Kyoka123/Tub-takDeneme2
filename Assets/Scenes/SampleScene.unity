@@ -3894,12 +3894,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2581147452176016524, guid: fdfb84b246e11cd45882070f569c41e4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.0136735
+      objectReference: {fileID: 0}
+    - target: {fileID: 2581147452176016524, guid: fdfb84b246e11cd45882070f569c41e4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2613798
+      objectReference: {fileID: 0}
+    - target: {fileID: 2581147452176016524, guid: fdfb84b246e11cd45882070f569c41e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.32312
+      value: -17.326
       objectReference: {fileID: 0}
     - target: {fileID: 2581147452176016524, guid: fdfb84b246e11cd45882070f569c41e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.79
+      value: 4.41
       objectReference: {fileID: 0}
     - target: {fileID: 2581147452176016524, guid: fdfb84b246e11cd45882070f569c41e4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3936,6 +3944,10 @@ PrefabInstance:
     - target: {fileID: 2925584122219560502, guid: fdfb84b246e11cd45882070f569c41e4, type: 3}
       propertyPath: m_Name
       value: Car
+      objectReference: {fileID: 0}
+    - target: {fileID: 6676008556252436970, guid: fdfb84b246e11cd45882070f569c41e4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.787
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
