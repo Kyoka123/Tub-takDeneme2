@@ -297,11 +297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 122ff978b664cd34686a6f7b57caf55f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlatformFall
-  minInterval: 1
-  maxInterval: 5
-  fallDelay: 0.5
-  fallDuration: 2
-  respawnTime: 1
+  mininterval: 1
+  maxinterval: 5
+  DurationItsGone: 3
 --- !u!1 &122761391
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,8 +1482,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 8, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1001 &800463195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1937,8 +1935,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 8, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &922170806
 GameObject:
   m_ObjectHideFlags: 0
@@ -2080,8 +2078,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 3, z: 4}
-  m_Center: {x: 0, y: 2.5, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1001 &985659835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2385,7 +2383,7 @@ Transform:
   m_GameObject: {fileID: 1012238466}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.007, y: -0.008, z: 0.0558}
+  m_LocalPosition: {x: -0.007, y: -0.19, z: 0.0558}
   m_LocalScale: {x: 2.1, y: 0.02, z: 4.665}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2410,8 +2408,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 51, z: 1}
+  m_Center: {x: 0, y: 25, z: 0}
 --- !u!33 &1012238470
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2430,7 +2428,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1027649656}
   - component: {fileID: 1027649657}
-  - component: {fileID: 1027649658}
   - component: {fileID: 1027649659}
   m_Layer: 0
   m_Name: PLATFORMS
@@ -2494,27 +2491,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &1027649658
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027649655}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 12.058105, y: 5, z: 12.218468}
-  m_Center: {x: -8.011492, y: -2.2034376, z: -1.0553751}
 --- !u!114 &1027649659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2680,7 +2656,7 @@ Transform:
   m_GameObject: {fileID: 1180266447}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.007, y: -0.008, z: 0.0558}
+  m_LocalPosition: {x: -0.007, y: -0.18, z: 0.0558}
   m_LocalScale: {x: 2.1, y: 0.02, z: 4.665}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2705,8 +2681,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 51, z: 1}
+  m_Center: {x: 0, y: 25, z: 0}
 --- !u!33 &1180266451
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3139,8 +3115,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 8, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &1365743071 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
@@ -3202,8 +3178,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 8, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &1411274199
 GameObject:
   m_ObjectHideFlags: 0
@@ -3508,8 +3484,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 4.5, z: 4}
-  m_Center: {x: 0, y: 1.75, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &1572302333
 GameObject:
   m_ObjectHideFlags: 0
@@ -3717,8 +3693,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 8, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &1661789387
 GameObject:
   m_ObjectHideFlags: 0
@@ -3814,8 +3790,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 8, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1001 &1732221178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4234,8 +4210,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 8, z: 4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 4, y: 0, z: 4}
+  m_Center: {x: 0, y: 4, z: 0}
 --- !u!1 &2075008955 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}

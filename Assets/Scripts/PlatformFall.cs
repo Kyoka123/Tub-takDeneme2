@@ -1,114 +1,76 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 public class PlatformFall : MonoBehaviour
 {
+    [SerializeField] private float mininterval = 1f;
+    [SerializeField] private float maxinterval = 5f;
+    [SerializeField] private float DurationItsGone = 3f;
     private GameObject[] platforms;
-    [SerializeField] private float minInterval = 2f;
-    [SerializeField] private float maxInterval = 5f;
-    [SerializeField] private float fallDelay = 0.5f;   // warning time before it drops
-    [SerializeField] private float fallDuration = 2f;  // how long it stays fallen
-    [SerializeField] private float respawnTime = 1f;   // time to move back into place
-
-    private Vector3[] originalPositions;
-    private Quaternion[] originalRotations;
-    private bool[] isBusy;
-
+    
+    private bool[] used;
     private void Awake()
     {
         platforms = GameObject.FindGameObjectsWithTag("Platform");
-        originalPositions = new Vector3[platforms.Length];
-        originalRotations = new Quaternion[platforms.Length];
-        isBusy = new bool[platforms.Length];
+        used = new bool[platforms.Length];
+    }
+    int GetRandomAvailableIndex()
+    {
+        List<int> available = new List<int>();
 
-        for (int i = 0; i < platforms.Length; i++)
+        for (int i = 0; i < used.Length; i++)
         {
-            originalPositions[i] = platforms[i].transform.position;
-            originalRotations[i] = platforms[i].transform.rotation;
+            if (!used[i])
+                available.Add(i);
         }
+
+        if (available.Count == 0)
+            return -1;
+
+        return available[Random.Range(0, available.Count)];
     }
 
     private void Start()
     {
-        
-        StartCoroutine(RandomEventLoop());
+        StartCoroutine(ShakeAndSetPlatformFalse());
     }
 
-    private IEnumerator RandomEventLoop()
+    IEnumerator ShakeAndSetPlatformFalse()
     {
         while (true)
         {
-            float wait = Random.Range(minInterval, maxInterval);
-            yield return new WaitForSeconds(wait);
-
+            float timeToWait = Random.Range(mininterval, maxinterval);
+            yield return new WaitForSeconds(timeToWait);
             int index = GetRandomAvailableIndex();
-            if (index != -1)
+            if (index == -1)
+                yield break;
+            Vector3 originalPos = platforms[index].transform.localPosition;
+
+            float duration = 1f;
+            float timer = 0f;
+
+            while (timer < duration)
             {
-                StartCoroutine(DropAndRespawn(index));
+                timer += Time.deltaTime;
+
+                float x = Mathf.Sin(timer * 30f) * 0.1f;
+                platforms[index].transform.localPosition = originalPos + new Vector3(x, 0, 0);
+
+                yield return null;
             }
+
+            // Eski konumuna dönsün
+            platforms[index].transform.localPosition = originalPos;
+            used[index] = true;
+            platforms[index].SetActive(false);
+            yield return new WaitForSeconds(DurationItsGone);
+            platforms[index].SetActive(true);
+            used[index] = false;
         }
     }
 
-    private int GetRandomAvailableIndex()
-    {
-        // Avoid picking a platform that's already falling/respawning
-        int startIndex = Random.Range(0, platforms.Length);
-        for (int offset = 0; offset < platforms.Length; offset++)
-        {
-            int idx = (startIndex + offset) % platforms.Length;
-            if (!isBusy[idx]) return idx;
-        }
-        return -1; // all busy
-    }
-
-    private IEnumerator DropAndRespawn(int index)
-    {
-        isBusy[index] = true;
-        GameObject platform = platforms[index];
-        Rigidbody rb = platform.GetComponent<Rigidbody>();
-
-        // Optional: warning shake before it falls
-        yield return new WaitForSeconds(fallDelay);
-
-        // Let physics take over
-        if (rb != null)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-        }
-
-        yield return new WaitForSeconds(fallDuration);
-
-        // Reset physics and snap/move back
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-            rb.isKinematic = true;
-        }
-
-        yield return StartCoroutine(MoveBack(platform, originalPositions[index], originalRotations[index], respawnTime));
-
-        isBusy[index] = false;
-    }
-
-    private IEnumerator MoveBack(GameObject platform, Vector3 targetPos, Quaternion targetRot, float duration)
-    {
-        Vector3 startPos = platform.transform.position;
-        Quaternion startRot = platform.transform.rotation;
-        float elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            float t = elapsed / duration;
-            platform.transform.position = Vector3.Lerp(startPos, targetPos, t);
-            platform.transform.rotation = Quaternion.Lerp(startRot, targetRot, t);
-            yield return null;
-        }
-
-        platform.transform.position = targetPos;
-        platform.transform.rotation = targetRot;
-    }
 
 }
+    

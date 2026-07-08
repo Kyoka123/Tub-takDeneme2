@@ -147,7 +147,7 @@ public class CarMovement2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Ground")
+        if (other.gameObject.tag == "Platform")
         {
             isGrounded = true;
         }
@@ -164,7 +164,7 @@ public class CarMovement2 : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Ground"))
+        if (other.CompareTag("Platform"))
         {
             isGrounded = false;
         }
