@@ -21,6 +21,7 @@ public class CarMovement2 : MonoBehaviour
     private float momentum_other;
     private float direction;
     private float velocityDirection;
+    private int activePlatformCount;
     [SerializeField] private float collisionSpeed = 0.2f;
     [SerializeField] private float collisionSpeed_other = 0.4f;
     private Vector3 _input;
@@ -149,6 +150,7 @@ public class CarMovement2 : MonoBehaviour
     {
         if (other.gameObject.tag == "Platform")
         {
+            activePlatformCount++;
             isGrounded = true;
         }
 
@@ -166,7 +168,12 @@ public class CarMovement2 : MonoBehaviour
     {
         if (other.CompareTag("Platform"))
         {
-            isGrounded = false;
+            activePlatformCount--;
+            if (activePlatformCount <= 0)
+            {
+                activePlatformCount = 0;
+                isGrounded = false;
+            }
         }
     }
 }

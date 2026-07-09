@@ -31,6 +31,7 @@ public class CarMovement : MonoBehaviour
     private float momentum_other;
     private float direction;
     private float velocityDirection;
+    private int activePlatformCount;
     //çarpýþma gücünü belirlemek için deðiþkenler
     [SerializeField] private float collisionSpeed = 0.2f;
     [SerializeField] private float collisionSpeed_other = 0.4f;
@@ -42,7 +43,8 @@ public class CarMovement : MonoBehaviour
     private bool isGrounded;
     private bool speedPowerUpActive;
     private bool strengthPowerUpActive;
-    
+    private bool isTilted;
+
 
     private void FixedUpdate()
     {
@@ -54,18 +56,20 @@ public class CarMovement : MonoBehaviour
             //yere deðdiði zaman sekmemesi için y deðerini 0f yaptýk
             Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
 
+            Vector3 localVelocity = transform.InverseTransformDirection(_horizontalVelocity);
+
             GatherInput();
             Look();
 
             //hýz yoksa sürtünme yok
-            if (_horizontalVelocity.magnitude < _minimumVelocity)
+            if (localVelocity.magnitude < _minimumVelocity || CheckTilt())
             {
                 _frictionForce = 0;
             }
             else
             {
                 _frictionForce = _frictionCoefficient * _mass * _gravity;
-                _rb.AddForce(_horizontalVelocity.normalized * -_frictionForce);
+                _rb.AddRelativeForce(localVelocity.normalized * -_frictionForce);
             }
             //sürtünmeyi ekledik
 
@@ -114,7 +118,7 @@ public class CarMovement : MonoBehaviour
     {
         speedPowerUpActive = true;
         _material.color = UnityEngine.Color.yellow * 4;
-        _material.SetFloat("_Size", 0.6f);
+        _material.SetFloat("_Size", 0.3f);
         _force *= 1.4f; // Gücü artır
         collisionSpeed_other /= 1.4f; // Diğer aracın çarpışma etkisini azaltarak dengeler
         yield return new WaitForSeconds(5f); // 5 saniye bekle
@@ -129,7 +133,7 @@ public class CarMovement : MonoBehaviour
     {
         strengthPowerUpActive = true;
         _material.color = new UnityEngine.Color(0.03f, 0f, 0.003f) * 4;
-        _material.SetFloat("_Size", 0.6f);
+        _material.SetFloat("_Size", 0.3f);
         collisionSpeed_other *= 3f; // Diğer aracın çarpışma etkisini arttırarak güçlenir
         yield return new WaitForSeconds(4f); // 4 saniye bekle
         collisionSpeed_other /= 3f; // Diğer aracın çarpışma etkisini azaltarak eski haline gelir
@@ -164,7 +168,8 @@ public class CarMovement : MonoBehaviour
     {
         if( other.gameObject.tag == "Platform")
         {
-            isGrounded = true;      
+            activePlatformCount++;
+            isGrounded = true;
         }
 
         if(other.gameObject.tag == "speedPowerUpCube" && !speedPowerUpActive)
@@ -182,8 +187,28 @@ public class CarMovement : MonoBehaviour
     {
         if (other.CompareTag("Platform"))
         {
-             isGrounded = false;
+            activePlatformCount--;
+            if (activePlatformCount <= 0)
+            {
+                activePlatformCount = 0;
+                isGrounded = false;
+            }
         }
     }
 
+    private bool CheckTilt()
+    {
+        // Euler açılarını alıyoruz (0 - 360 arası gelir)
+        Vector3 currentEuler = transform.eulerAngles;
+
+        // Açıları -180 ile 180 derece arasına çekiyoruz
+        float pitch = (currentEuler.x > 180f) ? currentEuler.x - 360f : currentEuler.x; // X ekseni
+        float roll = (currentEuler.z > 180f) ? currentEuler.z - 360f : currentEuler.z; // Z ekseni
+
+        // Mathf.Abs ile mutlak değerini alıp 10 dereceden büyük mü diye bakıyoruz
+        return Mathf.Abs(pitch) > 10f || Mathf.Abs(roll) > 10f;
+    }
+
 }
+
+    
