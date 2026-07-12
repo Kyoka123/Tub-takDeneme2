@@ -268,8 +268,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 004ce5527bebd864097e7886fb328b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RandomassEvents
-  CarMovement: {fileID: 0}
-  CarMovement2: {fileID: 0}
+  CarMovement: {fileID: 867891093}
+  CarMovement2: {fileID: 2075008964}
 --- !u!4 &110761709
 Transform:
   m_ObjectHideFlags: 0
@@ -1043,8 +1043,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &800463195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1490,8 +1490,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &966736558 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f46f1a0ab21d8b64999ac3413f1f80f0, type: 3}
@@ -1543,8 +1543,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &985659835
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1796,7 +1796,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1027649656}
-  - component: {fileID: 1027649657}
   - component: {fileID: 1027649659}
   m_Layer: 0
   m_Name: PLATFORMS
@@ -1833,33 +1832,6 @@ RectTransform:
   m_AnchoredPosition: {x: 30, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!54 &1027649657
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1027649655}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &1027649659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2391,8 +2363,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1365743071 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 6b726f4da1b058842a49356c605f9ae0, type: 3}
@@ -2454,8 +2426,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1570119325
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2590,8 +2562,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1586023399
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2709,8 +2681,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1661789387
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,8 +2778,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1732221178
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3223,8 +3195,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0, z: 4}
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Size: {x: 4, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2075008955 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}

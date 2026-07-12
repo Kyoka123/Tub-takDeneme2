@@ -23,6 +23,9 @@ public class RandomassEvents : MonoBehaviour
                 case 0:
                     yield return StartCoroutine(ControlInverter());
                     break;
+                case 1:
+                    // Add other events here
+                    break;
             }
 
             yield return new WaitForSeconds(15f);
