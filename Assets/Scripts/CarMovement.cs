@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -21,8 +22,9 @@ public class CarMovement : MonoBehaviour
     [SerializeField] private float _mass = 1f;
     [SerializeField] private float _gravity = 9.81f;
     [SerializeField] private float _gravityMultiplier = 1f;
-    [SerializeField] private float _frictionCoefficient = 2.6f;
-    [SerializeField] private float _angularDrag = 0.1f;
+    [SerializeField] private float _frictionCoefficient = 3.5f;
+    [SerializeField] private float _sideGripCoefficient = 1.3f;
+    [SerializeField] private float _angularDrag = 6f;
     [SerializeField] private float _minimumVelocity = 0.1f;
     public int inverter = 1;
     // çarpýþma sýrasýnda kullancaðýmýz deðerler
@@ -31,7 +33,8 @@ public class CarMovement : MonoBehaviour
     private float momentum_other;
     private float direction;
     private float velocityDirection;
-    private int activePlatformCount;
+    [SerializeField] private int activePlatformCount;
+    private List<Collider> _objectsInTrigger = new List<Collider>();
     //çarpýþma gücünü belirlemek için deðiþkenler
     [SerializeField] private float collisionSpeed = 0.2f;
     [SerializeField] private float collisionSpeed_other = 0.4f;
@@ -43,44 +46,68 @@ public class CarMovement : MonoBehaviour
     private bool isGrounded;
     private bool speedPowerUpActive;
     private bool strengthPowerUpActive;
-    private bool isTilted;
 
 
     private void FixedUpdate()
     {
+        _objectsInTrigger.RemoveAll(item => item == null || !item.enabled || !item.gameObject.activeInHierarchy);
+        activePlatformCount = _objectsInTrigger.Count;
+        isGrounded = activePlatformCount >= 2;
+
+        if (activePlatformCount >= 4)
+        {
+            _rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+            _rb.transform.position = new Vector3(_rb.transform.position.x, 0.07537979f, _rb.transform.position.z);
+            _rb.transform.rotation = Quaternion.Euler(0, _rb.transform.rotation.eulerAngles.y, 0);
+            _gravityMultiplier = 0f; // Yerçekimini devre dışı bırak
+        }
+        else
+        {
+            _rb.constraints = RigidbodyConstraints.None;
+            _gravityMultiplier = 1f; // Yerçekimini etkinleştir
+        }
+
+
         //yer çekimini iþledik
         _rb.AddForce(Vector3.down * _gravity * _gravityMultiplier, ForceMode.Acceleration);
 
         if (isGrounded)
         {
-            //yere deðdiði zaman sekmemesi için y deðerini 0f yaptýk
-            Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
-
-            Vector3 localVelocity = transform.InverseTransformDirection(_horizontalVelocity);
-
             GatherInput();
             Look();
 
-            //hýz yoksa sürtünme yok
-            if (localVelocity.magnitude < _minimumVelocity || CheckTilt())
+            // 1. Arabanın lokal hızlarını alıyoruz (X = Yan Kayma Hızı, Z = İleri/Geri Hızı)
+            Vector3 localVelocity = transform.InverseTransformDirection(_rb.linearVelocity);
+
+            // 2. İLERİ / GERİ SÜRTÜNME (Tekerlek Yuvarlanma Direnci)
+            if (Mathf.Abs(localVelocity.z) > _minimumVelocity)
             {
-                _frictionForce = 0;
+                float forwardFriction = _frictionCoefficient * _mass * _gravity;
+                // Sadece arabanın z eksenine (forward) ters yönde uygula
+                _rb.AddForce(-transform.forward * Mathf.Sign(localVelocity.z) * forwardFriction);
             }
-            else
+
+            // 3. YAN KAYMA SÜRTÜNMESİ (Yol Tutuşu / Grip)
+            // Araba yana kayıyorsa (X hızı varsa) bunu sıfırlayacak ters bir yan kuvvet uygula
+            if (Mathf.Abs(localVelocity.x) > _minimumVelocity)
             {
-                _frictionForce = _frictionCoefficient * _mass * _gravity;
-                _rb.AddRelativeForce(localVelocity.normalized * -_frictionForce);
+                // Buradaki multiplier (örn: 2f veya 5f) aracın ne kadar "drift" yapacağını belirler.
+                // Yüksek olursa yapışır, düşük olursa kayar.
+                float sideFriction = _frictionCoefficient * _mass * _gravity * _sideGripCoefficient;
+
+                // Sadece arabanın X eksenine (right) ters yönde uygula
+                _rb.AddForce(-transform.right * Mathf.Sign(localVelocity.x) * sideFriction);
             }
-            //sürtünmeyi ekledik
 
             Move();
         }
 
         //bu ne bilmiom
-        if (_input.x == 0)
+        if (_input.x == 0 && isGrounded)
         {
             float dampedY = Mathf.MoveTowards(_rb.angularVelocity.y, 0f, _angularDrag * Time.fixedDeltaTime);
-            _rb.angularVelocity = new Vector3(0, dampedY, 0);
+            _rb.angularVelocity = new Vector3(_rb.angularVelocity.x, dampedY, _rb.angularVelocity.z);
         }
     }
 
@@ -99,6 +126,11 @@ public class CarMovement : MonoBehaviour
     //dönmeyi iþledik
     private void Look()
     {
+        if (Mathf.Abs(_input.x) < 0.1f || _rb.linearVelocity.magnitude < 0.2f || !isGrounded)
+        {
+            return;
+        }
+
         Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
         velocityDirection = Vector3.Dot(_rb.linearVelocity, transform.forward);
 
@@ -166,10 +198,9 @@ public class CarMovement : MonoBehaviour
     //yere deðip deðmediðine baktýk
     private void OnTriggerEnter(Collider other)
     {
-        if( other.gameObject.tag == "Platform")
+        if( other.gameObject.tag == "Surface" )
         {
-            activePlatformCount++;
-            isGrounded = true;
+            _objectsInTrigger.Add(other);
         }
 
         if(other.gameObject.tag == "speedPowerUpCube" && !speedPowerUpActive)
@@ -185,28 +216,10 @@ public class CarMovement : MonoBehaviour
     //deðmiiyorsa false atadýk
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Platform"))
+        if (other.gameObject.tag == "Surface")
         {
-            activePlatformCount--;
-            if (activePlatformCount <= 0)
-            {
-                activePlatformCount = 0;
-                isGrounded = false;
-            }
+            _objectsInTrigger.Remove(other);
         }
-    }
-
-    private bool CheckTilt()
-    {
-        // Euler açılarını alıyoruz (0 - 360 arası gelir)
-        Vector3 currentEuler = transform.eulerAngles;
-
-        // Açıları -180 ile 180 derece arasına çekiyoruz
-        float pitch = (currentEuler.x > 180f) ? currentEuler.x - 360f : currentEuler.x; // X ekseni
-        float roll = (currentEuler.z > 180f) ? currentEuler.z - 360f : currentEuler.z; // Z ekseni
-
-        // Mathf.Abs ile mutlak değerini alıp 10 dereceden büyük mü diye bakıyoruz
-        return Mathf.Abs(pitch) > 10f || Mathf.Abs(roll) > 10f;
     }
 
 }
