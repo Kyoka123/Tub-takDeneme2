@@ -16,7 +16,7 @@ public class CarMovement : MonoBehaviour
     /// gerekli deðerleri atamak için deðiþkenler oluþturduk
     /// hareket etme, dönme ve yer çekimlerini ayarlayacak deðiþkenler
     [SerializeField] private Material _material;
-    [SerializeField] private Rigidbody _rb;
+    public Rigidbody _rb;
     [SerializeField] private float _force = 50f;
     [SerializeField] private float _turnSpeed = 4.5f;
     [SerializeField] private float _mass = 1f;

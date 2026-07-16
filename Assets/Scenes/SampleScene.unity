@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 004ce5527bebd864097e7886fb328b14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RandomassEvents
-  CarMovement: {fileID: 867891093}
+  CarMovement: {fileID: 653502439}
   CarMovement2: {fileID: 2075008964}
 --- !u!4 &110761709
 Transform:
@@ -3720,7 +3720,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5
+      value: -331.6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3765,6 +3765,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}
       propertyPath: m_Layer
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 05f002f1c1e3df34993f570a21d830a0, type: 3}
       propertyPath: m_TagString
