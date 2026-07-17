@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,8 +13,9 @@ public class CarMovement2 : MonoBehaviour
     [SerializeField] private float _mass = 1f;
     [SerializeField] private float _gravity = 9.81f;
     [SerializeField] private float _gravityMultiplier = 1f;
-    [SerializeField] private float _frictionCoefficient = 2.6f;
-    [SerializeField] private float _angularDrag = 0.1f;
+    [SerializeField] private float _frictionCoefficient = 3.5f;
+    [SerializeField] private float _sideGripCoefficient = 1.3f;
+    [SerializeField] private float _angularDrag = 6f;
     [SerializeField] private float _minimumVelocity = 0.1f;
     public int inverter = 1;
     private float _frictionForce;
@@ -21,7 +23,8 @@ public class CarMovement2 : MonoBehaviour
     private float momentum_other;
     private float direction;
     private float velocityDirection;
-    private int activePlatformCount;
+    [SerializeField] private int activePlatformCount;
+    private List<Collider> _objectsInTrigger = new List<Collider>();
     [SerializeField] private float collisionSpeed = 0.2f;
     [SerializeField] private float collisionSpeed_other = 0.4f;
     private Vector3 _input;
@@ -34,40 +37,64 @@ public class CarMovement2 : MonoBehaviour
 
     private void FixedUpdate()
     {
+        _objectsInTrigger.RemoveAll(item => item == null || !item.enabled || !item.gameObject.activeInHierarchy);
+        activePlatformCount = _objectsInTrigger.Count;
+        isGrounded = activePlatformCount >= 2;
 
-        /*if (_rb.linearVelocity.y < 0)
+        if (activePlatformCount >= 4)
         {
-            Vector3 _verticalAngularVelocity = new Vector3(0f, _rb.angularVelocity.y, 0f);
-            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, _verticalAngularVelocity.y * 5f, _rb.linearVelocity.z);
+            _rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+            _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+            _rb.transform.position = new Vector3(_rb.transform.position.x, 0.07537979f, _rb.transform.position.z);
+            _rb.transform.rotation = Quaternion.Euler(0, _rb.transform.rotation.eulerAngles.y, 0);
+            _gravityMultiplier = 0f; // Yerçekimini devre dışı bırak
+        }
+        else
+        {
+            _rb.constraints = RigidbodyConstraints.None;
+            _gravityMultiplier = 1f; // Yerçekimini etkinleştir
+        }
 
-        } */
 
+        //yer çekimini iþledik
         _rb.AddForce(Vector3.down * _gravity * _gravityMultiplier, ForceMode.Acceleration);
 
         if (isGrounded)
         {
-            Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
-
             GatherInput();
             Look();
 
-            if (_horizontalVelocity.magnitude < _minimumVelocity)
+            // 1. Arabanın lokal hızlarını alıyoruz (X = Yan Kayma Hızı, Z = İleri/Geri Hızı)
+            Vector3 localVelocity = transform.InverseTransformDirection(_rb.linearVelocity);
+
+            // 2. İLERİ / GERİ SÜRTÜNME (Tekerlek Yuvarlanma Direnci)
+            if (Mathf.Abs(localVelocity.z) > _minimumVelocity)
             {
-                _frictionForce = 0;
+                float forwardFriction = _frictionCoefficient * _mass * _gravity;
+                // Sadece arabanın z eksenine (forward) ters yönde uygula
+                _rb.AddForce(-transform.forward * Mathf.Sign(localVelocity.z) * forwardFriction);
             }
-            else
+
+            // 3. YAN KAYMA SÜRTÜNMESİ (Yol Tutuşu / Grip)
+            // Araba yana kayıyorsa (X hızı varsa) bunu sıfırlayacak ters bir yan kuvvet uygula
+            if (Mathf.Abs(localVelocity.x) > _minimumVelocity)
             {
-                _frictionForce = _frictionCoefficient * _mass * _gravity;
-                _rb.AddForce(_horizontalVelocity.normalized * -_frictionForce);
+                // Buradaki multiplier (örn: 2f veya 5f) aracın ne kadar "drift" yapacağını belirler.
+                // Yüksek olursa yapışır, düşük olursa kayar.
+                float sideFriction = _frictionCoefficient * _mass * _gravity * _sideGripCoefficient;
+
+                // Sadece arabanın X eksenine (right) ters yönde uygula
+                _rb.AddForce(-transform.right * Mathf.Sign(localVelocity.x) * sideFriction);
             }
 
             Move();
         }
 
-        if (_input.x == 0)
+        //bu ne bilmiom
+        if (_input.x == 0 && isGrounded)
         {
             float dampedY = Mathf.MoveTowards(_rb.angularVelocity.y, 0f, _angularDrag * Time.fixedDeltaTime);
-            _rb.angularVelocity = new Vector3(0, dampedY, 0);
+            _rb.angularVelocity = new Vector3(_rb.angularVelocity.x, dampedY, _rb.angularVelocity.z);
         }
     }
 
@@ -84,6 +111,11 @@ public class CarMovement2 : MonoBehaviour
 
     private void Look()
     {
+        if (Mathf.Abs(_input.x) < 0.1f || _rb.linearVelocity.magnitude < 0.2f || !isGrounded)
+        {
+            return;
+        }
+
         Vector3 _horizontalVelocity = new Vector3(_rb.linearVelocity.x, 0f, _rb.linearVelocity.z);
         velocityDirection = Vector3.Dot(_rb.linearVelocity, transform.forward);
 
@@ -102,10 +134,10 @@ public class CarMovement2 : MonoBehaviour
     {
         speedPowerUpActive = true;
         _material.color = UnityEngine.Color.yellow * 4;
-        _material.SetFloat("_Size", 0.6f);
+        _material.SetFloat("_Size", 0.3f);
         _force *= 1.4f; // Gücü artır
         collisionSpeed_other /= 1.4f; // Diğer aracın çarpışma etkisini azaltarak dengeler
-        yield return new WaitForSeconds(3f); // 3 saniye bekle
+        yield return new WaitForSeconds(5f); // 5 saniye bekle
         _force /= 1.4f; // Gücü eski haline getir
         collisionSpeed_other *= 1.4f; // Diğer aracın çarpışma etkisini eski haline getirerek düzeltir
         _material.SetFloat("_Size", 0f);
@@ -117,9 +149,9 @@ public class CarMovement2 : MonoBehaviour
     {
         strengthPowerUpActive = true;
         _material.color = new UnityEngine.Color(0.03f, 0f, 0.003f) * 4;
-        _material.SetFloat("_Size", 0.6f);
+        _material.SetFloat("_Size", 0.3f);
         collisionSpeed_other *= 3f; // Diğer aracın çarpışma etkisini arttırarak güçlenir
-        yield return new WaitForSeconds(2f); // 2 saniye bekle
+        yield return new WaitForSeconds(4f); // 4 saniye bekle
         collisionSpeed_other /= 3f; // Diğer aracın çarpışma etkisini azaltarak eski haline gelir
         _material.SetFloat("_Size", 0f);
         _material.color = UnityEngine.Color.black;
@@ -148,10 +180,9 @@ public class CarMovement2 : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Platform")
+        if (other.gameObject.tag == "Surface")
         {
-            activePlatformCount++;
-            isGrounded = true;
+            _objectsInTrigger.Add(other);
         }
 
         if (other.gameObject.tag == "speedPowerUpCube" && !speedPowerUpActive)
@@ -166,14 +197,9 @@ public class CarMovement2 : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Platform"))
+        if (other.gameObject.tag == "Surface")
         {
-            activePlatformCount--;
-            if (activePlatformCount <= 0)
-            {
-                activePlatformCount = 0;
-                isGrounded = false;
-            }
+            _objectsInTrigger.Remove(other);
         }
     }
 }
