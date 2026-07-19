@@ -6,15 +6,9 @@ public class Death : MonoBehaviour
 {
     Vector3 Targetpoint;
     Vector3 Targetpoint2;
-    private AudioSource _audioSource;
+    public AudioSource _audioSource;
     // Trigger enter alýyoruz ve playerýn tagine göre hareket ediyoruz
     // Trigger almamýzýn sebebi eðer collision alýrsak her collisionda olurdu
-
-    private void Awake()
-    {
-        // Nesne üzerindeki AudioSource bilesenini aliyoruz
-        _audioSource = GetComponent<AudioSource>();
-    }
 
     private IEnumerator OnTriggerEnter(Collider araba)
     {

@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public GameObject _hitParticlePrefab;
     public GameObject CarWillBeHit;
     public Rigidbody _rb;
 
@@ -11,10 +12,12 @@ public class Bullet : MonoBehaviour
         if (other.gameObject == CarWillBeHit)
         {
             Debug.Log("Mermi diger arabaya carpti!");
+            Quaternion reversedRotation = Quaternion.LookRotation(-transform.forward);
+            Instantiate(_hitParticlePrefab, transform.position - (transform.forward * 3.4f), reversedRotation);
 
             // Buraya durabilty eksiltme kodunu yapistir coni
 
-            StartCoroutine(WaitAndDestroy(0.01f));
+            StartCoroutine(WaitAndDestroy(0.005f));
         }
     }
 

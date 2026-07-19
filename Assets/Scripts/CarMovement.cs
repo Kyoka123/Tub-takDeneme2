@@ -49,6 +49,8 @@ public class CarMovement : MonoBehaviour
     private bool speedPowerUpActive;
     private bool strengthPowerUpActive;
 
+    public AudioSource _audioSource;
+
 
     private void FixedUpdate()
     {
@@ -154,11 +156,12 @@ public class CarMovement : MonoBehaviour
     {
         if (Keyboard.current.eKey.isPressed && !isFiring)
             {
+            _audioSource.Play();
             GameObject spawnedBullet = Instantiate(_bullet, transform.position + transform.forward, transform.rotation);
             Rigidbody bulletRb = spawnedBullet.GetComponent<Rigidbody>();
             bulletRb.linearVelocity = transform.forward * 200f;
             isFiring = true;
-            yield return new WaitForSeconds(0.2f); // 0.2 saniye bekle
+            yield return new WaitForSeconds(0.6f); // 0.6 saniye bekle
             isFiring = false;
             yield return new WaitForSeconds(3f); // 3 saniye bekle
             Destroy(spawnedBullet); // Mermiyi yok et
