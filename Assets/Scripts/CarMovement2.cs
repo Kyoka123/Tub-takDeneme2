@@ -14,7 +14,7 @@ public class CarMovement2 : MonoBehaviour
     [SerializeField] private float _gravity = 9.81f;
     [SerializeField] private float _gravityMultiplier = 1f;
     [SerializeField] private float _frictionCoefficient = 3.5f;
-    [SerializeField] private float _sideGripCoefficient = 1.3f;
+    [SerializeField] private float _sideGripCoefficient = 1.35f;
     [SerializeField] private float _angularDrag = 6f;
     [SerializeField] private float _minimumVelocity = 0.1f;
     public int inverter = 1;
@@ -25,11 +25,13 @@ public class CarMovement2 : MonoBehaviour
     private float velocityDirection;
     [SerializeField] private int activePlatformCount;
     private List<Collider> _objectsInTrigger = new List<Collider>();
+    public GameObject _bullet;
     [SerializeField] private float collisionSpeed = 0.2f;
     [SerializeField] private float collisionSpeed_other = 0.4f;
     private Vector3 _input;
     private Vector2 inputRaw;
 
+    bool isFiring;
     bool isGrounded;
     bool speedPowerUpActive;
     bool strengthPowerUpActive;
@@ -90,6 +92,8 @@ public class CarMovement2 : MonoBehaviour
             Move();
         }
 
+        StartCoroutine(FireBullet());
+
         //bu ne bilmiom
         if (_input.x == 0 && isGrounded)
         {
@@ -128,6 +132,21 @@ public class CarMovement2 : MonoBehaviour
     private void Move()
     {
         _rb.AddForce(transform.forward * _input.z * _mass * _force);
+    }
+
+    private IEnumerator FireBullet()
+    {
+        if (Keyboard.current.rightShiftKey.isPressed && !isFiring)
+        {
+            GameObject spawnedBullet = Instantiate(_bullet, transform.position + transform.forward, transform.rotation);
+            Rigidbody bulletRb = spawnedBullet.GetComponent<Rigidbody>();
+            bulletRb.linearVelocity = transform.forward * 200f;
+            isFiring = true;
+            yield return new WaitForSeconds(0.2f); // 0.2 saniye bekle
+            isFiring = false;
+            yield return new WaitForSeconds(3f); // 3 saniye bekle
+            Destroy(spawnedBullet); // Mermiyi yok et
+        }
     }
 
     IEnumerator SpeedPowerUpRoutine()
