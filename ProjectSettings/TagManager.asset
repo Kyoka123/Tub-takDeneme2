@@ -11,6 +11,8 @@ TagManager:
   - strengthPowerUpCube
   - Surface
   - carpisma
+  - Bomb
+  - Bullet
   layers:
   - Default
   - TransparentFX

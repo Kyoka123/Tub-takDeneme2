@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("Mermi diger arabaya carpti!");
             Quaternion reversedRotation = Quaternion.LookRotation(-transform.forward);
-            GameObject _hitParticleClone = Instantiate(_hitParticle, transform.position - (transform.forward * 3.4f), reversedRotation);
+            GameObject _hitParticleClone = Instantiate(_hitParticle, transform.position - (transform.forward * 3f), reversedRotation);
             Destroy(_hitParticleClone, 0.3f);
             _rb.linearVelocity = Vector3.zero;
             Destroy(gameObject, 0.005f);

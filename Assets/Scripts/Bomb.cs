@@ -1,65 +1,81 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class Bomb : MonoBehaviour
 {
 
-    public float maxExplosionForce = 25f;
+    public float maxExplosionForce = 30f;
     public float explosionRadius = 10f;
     public LayerMask targetLayer;
-    public bool hasExploded = false;
+    public GameObject explosionEffect;
+    public GameObject explosionSound;
 
     void Start()
     {
         targetLayer = LayerMask.GetMask("Outline", "Outline2");
     }
 
-    private void FixedUpdate()
+    public IEnumerator Explode()
     {
-        if (Keyboard.current.bKey.isPressed)
+        yield return new WaitForSeconds(3.5f);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, targetLayer);
+
+        if (colliders.Length == 0)
         {
-            StartCoroutine(Explode());
+            Explode_VFX_SFX(explosionSound, explosionEffect, gameObject);
+            yield break;
+        }
+        else
+        {
+
+            foreach (Collider hit in colliders)
+            {
+                Rigidbody rb = hit.attachedRigidbody;
+                if (rb != null)
+                {
+                    float distance = Vector3.Distance(transform.position, hit.bounds.center);
+                    float forceIntensity = Mathf.Clamp01(1.3f - (distance / explosionRadius));
+
+                    Vector3 direction = hit.bounds.center - transform.position;
+                    direction.y = 0; // Sadece X ve Z ekseni
+
+                    if (direction.magnitude > 0.01f)
+                    {
+                        direction.Normalize();
+                    }
+                    else
+                    {
+                        // Tam altindaysa rastgele bir yone firlat
+                        direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
+                    }
+
+                    float finalForce = forceIntensity * maxExplosionForce;
+
+                    rb.AddForce(direction * finalForce, ForceMode.Impulse);
+                }
+            }
+            Explode_VFX_SFX(explosionSound, explosionEffect, gameObject);
         }
     }
 
-    public IEnumerator Explode()
+    public void Explode_VFX_SFX(GameObject sfx, GameObject vfx, GameObject bomb)
     {
-        if (hasExploded)
+        GameObject vfxInstance = Instantiate(vfx, transform.position, transform.rotation);
+        VisualEffect vfxComponent;
+        if (vfxInstance.TryGetComponent<VisualEffect>(out vfxComponent))
         {
-            yield break;
+            vfxComponent.Play();
         }
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, targetLayer);
-
-        foreach (Collider hit in colliders)
+        GameObject sfxInstance = Instantiate(sfx, transform.position, transform.rotation);
+        AudioSource sfxComponent;
+        if (sfxInstance.TryGetComponent<AudioSource>(out sfxComponent))
         {
-            Rigidbody rb = hit.attachedRigidbody;
-
-            if (rb != null)
-            {
-                float distance = Vector3.Distance(transform.position, hit.bounds.center);
-                float forceIntensity = Mathf.Clamp01(1.3f - (distance / explosionRadius));
-
-                Vector3 direction = hit.bounds.center - transform.position;
-                direction.y = 0; // Sadece X ve Z ekseni
-
-                if (direction.magnitude > 0.01f)
-                {
-                    direction.Normalize();
-                }
-                else
-                {
-                    // Tam altindaysa rastgele bir yone firlat
-                    direction = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)).normalized;
-                }
-
-                float finalForce = forceIntensity * maxExplosionForce;
-
-                rb.AddForce(direction * finalForce, ForceMode.Impulse);
-                hasExploded = true;
-            }
+            sfxComponent.Play();
         }
-        yield return new WaitForSeconds(1f); // 1 saniye bekle
-        //Destroy(gameObject);
+        Destroy(bomb);
+        Destroy(vfxInstance, 3f);
+        Destroy(sfxInstance, 3f);
     }
 }
