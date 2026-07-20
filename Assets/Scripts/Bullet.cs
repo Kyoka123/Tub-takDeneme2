@@ -22,7 +22,8 @@ public class Bullet : MonoBehaviour
             Destroy(_hitParticleClone, 0.3f);
             _rb.linearVelocity = Vector3.zero;
             Destroy(gameObject, 0.005f);
-            // Buraya durabilty eksiltme kodunu yapistir coni
+            Durabiliy.durability -= 10f;
+            // halletim coni deðeri degistirebilirsin az ya da cok olmussa
 
         }
     }

@@ -54,6 +54,9 @@ public class Bomb : MonoBehaviour
                     float finalForce = forceIntensity * maxExplosionForce;
 
                     rb.AddForce(direction * finalForce, ForceMode.Impulse);
+
+                    Durabiliy.durability -= finalForce * 0.6f; // Dayanýklýlýðý azalt
+                    
                 }
             }
             Explode_VFX_SFX(explosionSound, explosionEffect, gameObject);
