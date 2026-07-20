@@ -232,8 +232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4edbc4e5273974dae8c9e5aa4aedea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bomb
-  maxExplosionForce: 30
-  explosionRadius: 10
+  maxExplosionForce: 45
+  explosionRadius: 12
   targetLayer:
     serializedVersion: 2
     m_Bits: 0

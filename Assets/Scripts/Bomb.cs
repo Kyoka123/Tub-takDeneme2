@@ -6,8 +6,8 @@ using UnityEngine.VFX;
 public class Bomb : MonoBehaviour
 {
 
-    public float maxExplosionForce = 30f;
-    public float explosionRadius = 10f;
+    public float maxExplosionForce = 45f;
+    public float explosionRadius = 12f;
     public LayerMask targetLayer;
     public GameObject explosionEffect;
     public GameObject explosionSound;
@@ -62,6 +62,7 @@ public class Bomb : MonoBehaviour
 
     public void Explode_VFX_SFX(GameObject sfx, GameObject vfx, GameObject bomb)
     {
+        if (gameObject == null) return;
         GameObject vfxInstance = Instantiate(vfx, transform.position, transform.rotation);
         VisualEffect vfxComponent;
         if (vfxInstance.TryGetComponent<VisualEffect>(out vfxComponent))
