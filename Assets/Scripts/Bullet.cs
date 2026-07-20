@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    public GameObject _hitParticlePrefab;
+    public GameObject _hitParticle;
     public GameObject CarWillBeHit;
     public Rigidbody _rb;
+
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -13,19 +18,12 @@ public class Bullet : MonoBehaviour
         {
             Debug.Log("Mermi diger arabaya carpti!");
             Quaternion reversedRotation = Quaternion.LookRotation(-transform.forward);
-            Instantiate(_hitParticlePrefab, transform.position - (transform.forward * 3.4f), reversedRotation);
-
+            GameObject _hitParticleClone = Instantiate(_hitParticle, transform.position - (transform.forward * 3.4f), reversedRotation);
+            Destroy(_hitParticleClone, 0.3f);
+            _rb.linearVelocity = Vector3.zero;
+            Destroy(gameObject, 0.005f);
             // Buraya durabilty eksiltme kodunu yapistir coni
 
-            StartCoroutine(WaitAndDestroy(0.005f));
         }
-    }
-
-    private IEnumerator WaitAndDestroy(float waitTime)
-    {
-        _rb = GetComponent<Rigidbody>();
-        _rb.linearVelocity = Vector3.zero; // Mermiyi durdur
-        yield return new WaitForSeconds(waitTime);
-        Destroy(gameObject);
     }
 }
