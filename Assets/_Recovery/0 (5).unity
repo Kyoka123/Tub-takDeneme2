@@ -1825,22 +1825,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9000006, y: 1.0000001, z: 3}
   m_Center: {x: 0.00000002980232, y: 0.49999997, z: 0.000000059604645}
---- !u!114 &653502444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 653502434}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b70d6810e52f964ab6e4d7b7927fbb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Durabiliy
-  multiplier: 2
-  _meshRenderer: {fileID: 653502448}
-  flickerDuration: 1.5
-  flickerInterval: 0.1
 --- !u!82 &653502447
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1943,6 +1927,22 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2300000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
   m_PrefabInstance: {fileID: 913275672}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &653502450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653502434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b70d6810e52f964ab6e4d7b7927fbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Durabiliy
+  multiplier: 2
+  _meshRenderer: {fileID: 653502448}
+  flickerDuration: 1.5
+  flickerInterval: 0.1
 --- !u!1001 &720188997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2186,10 +2186,10 @@ PrefabInstance:
       addedObject: {fileID: 746386449}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 746386452}
+      addedObject: {fileID: 746386455}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 746386455}
+      addedObject: {fileID: 746386458}
   m_SourcePrefab: {fileID: 100100000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
 --- !u!1 &746386444 stripped
 GameObject:
@@ -2278,22 +2278,6 @@ MonoBehaviour:
   collisionSpeed: 0.2
   collisionSpeed_other: 0.4
   _audioSource: {fileID: 746386455}
---- !u!114 &746386452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 746386444}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b70d6810e52f964ab6e4d7b7927fbb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Durabiliy
-  multiplier: 2
-  _meshRenderer: {fileID: 746386456}
-  flickerDuration: 1.5
-  flickerInterval: 0.1
 --- !u!82 &746386455
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2396,6 +2380,22 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 2300000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
   m_PrefabInstance: {fileID: 746386443}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &746386458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 746386444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b70d6810e52f964ab6e4d7b7927fbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Durabiliy
+  multiplier: 2
+  _meshRenderer: {fileID: 746386456}
+  flickerDuration: 1.5
+  flickerInterval: 0.1
 --- !u!1 &792961949 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3348895394584832469, guid: a2be2a675660c244fa3317d06227cf96, type: 3}
@@ -2800,10 +2800,10 @@ PrefabInstance:
       addedObject: {fileID: 653502439}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 653502444}
+      addedObject: {fileID: 653502447}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 653502447}
+      addedObject: {fileID: 653502450}
   m_SourcePrefab: {fileID: 100100000, guid: 2822d974899b14abba9d6cdb97cc6b4c, type: 3}
 --- !u!1 &920290579 stripped
 GameObject:
