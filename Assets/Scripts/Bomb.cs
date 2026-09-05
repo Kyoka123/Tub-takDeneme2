@@ -20,6 +20,7 @@ public class Bomb : MonoBehaviour
     public IEnumerator Explode()
     {
         yield return new WaitForSeconds(3.5f);
+        if (gameObject == null) yield break;
         Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius, targetLayer);
 
         if (colliders.Length == 0)
